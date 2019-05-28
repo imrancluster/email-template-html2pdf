@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    # command: bash -c "cd src/gateway && gunicorn --host 0.0.0.0 main:main --reload"
+    command: bash -c "cd src && gunicorn --chdir gateway main:app --bind 0.0.0.0:8000 --worker-class aiohttp.GunicornWebWorker --reload"
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "8000:8000"
+  # worker:
+  #   build: .
+  #   environment:
+  #     - ENV_EXAMPLE_VAR=env-example-value
